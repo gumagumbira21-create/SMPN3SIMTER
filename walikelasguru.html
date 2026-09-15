@@ -443,6 +443,48 @@
             background-color: #4b5563;
             border-radius: 6px;
         }
+
+        #detailKasusSiswaModal .custom-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            table-layout: fixed;
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #detailKasusSiswaModal .custom-table th {
+            background-color: #111827;
+            color: #e5e7eb;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid #374151;
+            position: sticky;
+            top: 0;
+        }
+        #detailKasusSiswaModal .custom-table td {
+            padding: 12px 14px;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            border-bottom: 1px solid #374151;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+        #detailKasusSiswaModal .custom-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        #detailKasusSiswaModal .custom-table tbody tr:hover td {
+            background-color: #283244;
+        }
+        #detailKasusSiswaModal .custom-table th:first-child,
+        #detailKasusSiswaModal .custom-table td:first-child {
+            text-align: center;
+        }
         #inputAbsensiModal .table-scroll-wrapper::-webkit-scrollbar-track {
             background-color: #1f2937;
         }
@@ -800,11 +842,12 @@
                                     <th style="background-color: #3b82f6; color: white;">Nama Siswa</th>
                                     <th style="background-color: #3b82f6; color: white;">Jenis Kasus</th>
                                     <th style="background-color: #3b82f6; color: white;">Pelapor</th>
+                                    <th style="background-color: #3b82f6; color: white; text-align: center;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td colspan="5" style="text-align: center;">Memuat data kasus...</td>
+                                    <td colspan="6" style="text-align: center;">Memuat data kasus...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -928,6 +971,102 @@
         </div>
     </div>
 
+    <div id="detailKasusSiswaModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left;">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle" style="color: #ef4444; margin-right: 8px;"></i>Riwayat Kasus: <span id="detailKasusSiswaNama"></span></h3>
+                <span class="close-modal" onclick="document.getElementById('detailKasusSiswaModal').classList.remove('active')">&times;</span>
+            </div>
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <table class="custom-table" id="detailKasusSiswaTable" style="margin: 0;">
+                    <colgroup>
+                        <col style="width: 50px;">
+                        <col style="width: 110px;">
+                        <col>
+                        <col style="width: 180px;">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Jenis Kasus</th>
+                            <th>Pelapor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detailKasusSiswaTbody">
+                        <tr><td colspan="4" style="text-align: center;">Memuat data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('detailKasusSiswaModal').classList.remove('active')">Tutup</button>
+                <button type="button" class="btn" style="background-color:#f59e0b;" onclick="openSuratPanggilanModal()"><i class="fas fa-envelope-open-text" style="margin-right:6px;"></i>Surat Panggilan</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="suratPanggilanModal" class="modal" style="z-index: 2200;">
+        <div class="modal-content" style="max-width: 550px; text-align: left;">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope-open-text" style="color: #f59e0b; margin-right: 8px;"></i>Surat Panggilan Orang Tua/Wali</h3>
+                <span class="close-modal" onclick="document.getElementById('suratPanggilanModal').classList.remove('active')">&times;</span>
+            </div>
+            <form id="suratPanggilanForm">
+                <div class="form-group">
+                    <label>Nama Siswa</label>
+                    <input type="text" id="spNamaSiswa" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Kelas</label>
+                    <input type="text" id="spKelas" readonly>
+                </div>
+                <div class="form-group">
+                    <label>NISN</label>
+                    <input type="text" id="spNisn" readonly placeholder="Otomatis terisi">
+                </div>
+                <div class="form-group">
+                    <label>Nomor Surat</label>
+                    <input type="text" id="spNomorSurat" placeholder="Contoh: 400.3.5/ /SMPN3SIMTER/2026" required>
+                </div>
+                <div class="form-group">
+                    <label>Nama Orang Tua/Wali (opsional)</label>
+                    <input type="text" id="spNamaOrtu" placeholder="Otomatis terisi dari data siswa, bisa diedit">
+                </div>
+                <div class="form-group">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <label style="margin-bottom:0;">Perihal / Uraian Pelanggaran</label>
+                        <button type="button" onclick="generateUraianPelanggaran()" style="background:#10b981; color:#fff; border:none; padding:5px 10px; border-radius:5px; font-size:0.8rem; cursor:pointer; display:inline-flex; align-items:center; gap:5px; white-space:nowrap;"><i class="fas fa-magic"></i>Generate Uraian</button>
+                    </div>
+                    <textarea id="spPerihal" rows="5" placeholder="Contoh: telah melakukan pelanggaran terhadap tata tertib sekolah berupa ..." style="width:100%; padding:10px; background:#374151; border:1px solid #4b5563; border-radius:6px; font-size:0.95rem; color:#fff; resize:vertical; font-family:inherit; text-align:justify;" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Panggilan</label>
+                    <input type="date" id="spTanggalPanggilan" required>
+                </div>
+                <div class="form-group">
+                    <label>Pukul</label>
+                    <input type="text" id="spPukul" value="09.00 s.d. Selesai" required>
+                </div>
+                <div class="form-group">
+                    <label>Tempat</label>
+                    <input type="text" id="spTempat" placeholder="Contoh: Ruang Guru/BK" required>
+                </div>
+                <div class="form-group">
+                    <label>Nama Kepala Sekolah</label>
+                    <input type="text" id="spNamaKepsek" readonly required placeholder="Otomatis terisi dari Identitas Sekolah">
+                </div>
+                <div class="form-group">
+                    <label>NIP Kepala Sekolah</label>
+                    <input type="text" id="spNipKepsek" readonly required placeholder="Otomatis terisi dari Identitas Sekolah">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('suratPanggilanModal').classList.remove('active')">Batal</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-file-pdf" style="margin-right:6px;"></i>Unduh Surat (PDF)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="absensiSudahAdaModal" class="modal" style="z-index: 2100;">
         <div class="modal-content" style="text-align: center; max-width: 400px;">
             <i class="fas fa-exclamation-triangle" style="font-size: 40px; color: #f59e0b; margin-bottom: 15px;"></i>
@@ -1004,7 +1143,7 @@
                 try {
                     const { data, error } = await supabaseClient
                         .from('identitassekolah')
-                        .select('nama_sekolah, logo, kop_sekolah')
+                        .select('nama_sekolah, logo, kop_sekolah, nama_kepsek, nip_kepsek')
                         .limit(1)
                         .single();
                     
@@ -1395,7 +1534,7 @@
 
                 tbody.innerHTML = '';
                 if (!data || data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Belum ada data kasus.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Belum ada data kasus.</td></tr>';
                     return;
                 }
 
@@ -1407,14 +1546,306 @@
                         <td>${item.nama_siswa}</td>
                         <td>${item.jenis_kasus}</td>
                         <td>${item.nama_guru || '-'}</td>
+                        <td style="text-align: center;">
+                            <button class="btn-view-kasus" data-nama="${item.nama_siswa}" style="background:none; border:none; color:#60a5fa; cursor:pointer; font-size:1rem;" title="Lihat Semua Kasus Siswa Ini"><i class="fas fa-eye"></i></button>
+                        </td>
                     `;
                     tbody.appendChild(row);
                 });
             } catch (err) {
                 console.error("Error loading kasus:", err);
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Gagal memuat data: ${err.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">Gagal memuat data: ${err.message}</td></tr>`;
             }
         }
+
+        // Delegasi klik tombol mata (Lihat Semua Kasus Siswa) pada tabel Kasus Kelas
+        document.querySelector('#kasusTable tbody').addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-view-kasus');
+            if (btn) {
+                viewKasusSiswa(btn.dataset.nama);
+            }
+        });
+
+        // Menyimpan konteks siswa yang sedang dilihat riwayat kasusnya (dipakai juga oleh Surat Panggilan)
+        let currentKasusSiswaNama = '';
+        let currentKasusSiswaKelas = '';
+
+        // Tampilkan semua kasus milik satu siswa (di kelas yang sedang aktif) dalam modal
+        async function viewKasusSiswa(namaSiswa) {
+            const modal = document.getElementById('detailKasusSiswaModal');
+            const tbody = document.getElementById('detailKasusSiswaTbody');
+            document.getElementById('detailKasusSiswaNama').textContent = namaSiswa;
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Memuat data...</td></tr>';
+            modal.classList.add('active');
+
+            currentKasusSiswaNama = namaSiswa;
+            currentKasusSiswaKelas = document.getElementById('bioKelas').textContent;
+
+            try {
+                const kelas = document.getElementById('bioKelas').textContent;
+                const { data, error } = await absensiClient
+                    .from('kasussiswa')
+                    .select('*')
+                    .eq('nama_siswa', namaSiswa)
+                    .eq('kelas', kelas)
+                    .order('tanggal', { ascending: false });
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Tidak ada data kasus untuk siswa ini.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                data.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td style="text-align: center;">${index + 1}</td>
+                        <td>${item.tanggal}</td>
+                        <td>${item.jenis_kasus}</td>
+                        <td>${item.nama_guru || '-'}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (err) {
+                console.error("Error loading detail kasus siswa:", err);
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Gagal memuat data: ${err.message}</td></tr>`;
+            }
+        }
+
+        // Buka modal input Surat Panggilan, terisi otomatis dari konteks siswa yang sedang dibuka
+        async function openSuratPanggilanModal() {
+            document.getElementById('spNamaSiswa').value = currentKasusSiswaNama || '-';
+            document.getElementById('spKelas').value = currentKasusSiswaKelas || '-';
+            document.getElementById('spNisn').value = 'Memuat...';
+            document.getElementById('spNomorSurat').value = '';
+            document.getElementById('spNamaOrtu').value = 'Memuat...';
+            document.getElementById('spPerihal').value = '';
+            document.getElementById('spTanggalPanggilan').value = '';
+            document.getElementById('spPukul').value = '09.00 s.d. Selesai';
+
+            const namaSekolahDefault = schoolData.nama_sekolah || document.querySelector('.navbar-brand span').textContent || '';
+            document.getElementById('spTempat').value = namaSekolahDefault;
+
+            // Nama & NIP Kepala Sekolah otomatis diambil dari data Identitas Sekolah
+            document.getElementById('spNamaKepsek').value = schoolData.nama_kepsek || '';
+            document.getElementById('spNipKepsek').value = schoolData.nip_kepsek || '';
+
+            document.getElementById('suratPanggilanModal').classList.add('active');
+
+            // Ambil NISN & nama orang tua/wali otomatis berdasarkan nama siswa & kelas
+            try {
+                const { data, error } = await absensiClient
+                    .from('mappingsiswa')
+                    .select('nisn, nama_ayah, nama_ibu')
+                    .eq('nama_siswa', currentKasusSiswaNama)
+                    .eq('kelas', currentKasusSiswaKelas)
+                    .maybeSingle();
+
+                if (error) throw error;
+
+                document.getElementById('spNisn').value = (data && data.nisn) ? data.nisn : '-';
+                const namaOrtuOtomatis = data ? (data.nama_ayah || data.nama_ibu || '') : '';
+                document.getElementById('spNamaOrtu').value = namaOrtuOtomatis;
+            } catch (err) {
+                console.error('Gagal mengambil data NISN/orang tua:', err);
+                document.getElementById('spNisn').value = '-';
+                document.getElementById('spNamaOrtu').value = '';
+            }
+        }
+
+        // Isi otomatis teks uraian pelanggaran pada Surat Panggilan
+        function generateUraianPelanggaran() {
+            const namaSiswa = currentKasusSiswaNama || document.getElementById('spNamaSiswa').value || 'siswa yang bersangkutan';
+            const schoolName = schoolData.nama_sekolah || document.querySelector('.navbar-brand span').textContent || 'sekolah';
+
+            const template = `Dengan hormat,\nSehubungan dengan proses pembinaan kedisiplinan dan tata tertib siswa di lingkungan ${schoolName}, bersama surat ini kami memberitahukan bahwa ${namaSiswa} telah melakukan pelanggaran terhadap tata tertib sekolah.\nDemi kebaikan dan masa depan anak kita bersama, pihak sekolah memandang perlu untuk melakukan kerja sama dan koordinasi langsung dengan orang tua/wali murid. Sehubungan dengan hal tersebut, kami mengharap kehadiran Bapak/Ibu pada:`;
+
+            document.getElementById('spPerihal').value = template;
+        }
+
+        // Cetak paragraf dengan perataan kiri-kanan (justify) di PDF
+        function printParagrafJustify(doc, text, x, y, maxWidth, lineHeight) {
+            const lines = doc.splitTextToSize(text, maxWidth);
+            doc.text(text, x, y, { align: 'justify', maxWidth: maxWidth });
+            return y + lines.length * lineHeight;
+        }
+
+        document.getElementById('suratPanggilanForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const namaSiswa = document.getElementById('spNamaSiswa').value;
+            const kelas = document.getElementById('spKelas').value;
+            const nisn = document.getElementById('spNisn').value.trim();
+            const nomorSurat = document.getElementById('spNomorSurat').value.trim();
+            const namaOrtu = document.getElementById('spNamaOrtu').value.trim();
+            const perihal = document.getElementById('spPerihal').value.trim();
+            const tanggalPanggilanVal = document.getElementById('spTanggalPanggilan').value;
+            const pukul = document.getElementById('spPukul').value.trim();
+            const tempat = document.getElementById('spTempat').value.trim();
+            const namaKepsek = document.getElementById('spNamaKepsek').value.trim();
+            const nipKepsek = document.getElementById('spNipKepsek').value.trim();
+
+            // Validasi: semua data wajib harus terisi lengkap sebelum bisa diexport
+            const fieldWajib = [
+                { nilai: nomorSurat, label: 'Nomor Surat', id: 'spNomorSurat' },
+                { nilai: perihal, label: 'Perihal / Uraian Pelanggaran', id: 'spPerihal' },
+                { nilai: tanggalPanggilanVal, label: 'Tanggal Panggilan', id: 'spTanggalPanggilan' },
+                { nilai: pukul, label: 'Pukul', id: 'spPukul' },
+                { nilai: tempat, label: 'Tempat', id: 'spTempat' },
+                { nilai: namaKepsek, label: 'Nama Kepala Sekolah (cek data di Identitas Sekolah)', id: 'spNamaKepsek' },
+                { nilai: nipKepsek, label: 'NIP Kepala Sekolah (cek data di Identitas Sekolah)', id: 'spNipKepsek' }
+            ];
+
+            const fieldKosong = fieldWajib.find(f => !f.nilai);
+            if (fieldKosong) {
+                alert(`Data belum lengkap!\n\nMohon lengkapi terlebih dahulu: ${fieldKosong.label}`);
+                document.getElementById(fieldKosong.id).focus();
+                return;
+            }
+
+            const schoolName = schoolData.nama_sekolah || document.querySelector('.navbar-brand span').textContent || 'Sekolah';
+
+            const [y, m, d] = tanggalPanggilanVal.split('-').map(Number);
+            const tglPanggilanObj = new Date(y, m - 1, d);
+            const hariNama = tglPanggilanObj.toLocaleDateString('id-ID', { weekday: 'long' });
+            const tglPanggilanStr = tglPanggilanObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const hariTanggalStr = `${hariNama}, ${tglPanggilanStr}`;
+
+            const today = new Date();
+            const tanggalSuratStr = today.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.width;
+            const marginLeft = 20;
+            const marginRight = pageWidth - 20;
+            const textWidth = marginRight - marginLeft;
+            let yPos = 15;
+
+            // Kop surat (pakai gambar kop sekolah jika tersedia)
+            if (schoolData.kop_sekolah) {
+                try {
+                    const response = await fetch(schoolData.kop_sekolah);
+                    const blob = await response.blob();
+                    const base64data = await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.readAsDataURL(blob);
+                    });
+                    const imgProps = doc.getImageProperties(base64data);
+                    const pdfWidth = pageWidth - 20;
+                    const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                    doc.addImage(base64data, 'PNG', 10, 10, pdfWidth, imgHeight);
+                    yPos = 10 + imgHeight + 5;
+                } catch (err) {
+                    console.error("Gagal memuat KOP Sekolah:", err);
+                    doc.setFontSize(14);
+                    doc.setFont(undefined, 'bold');
+                    doc.text(schoolName, pageWidth / 2, yPos, { align: 'center' });
+                    yPos += 8;
+                    doc.setFont(undefined, 'normal');
+                }
+            } else {
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text(schoolName, pageWidth / 2, yPos, { align: 'center' });
+                yPos += 8;
+                doc.setFont(undefined, 'normal');
+            }
+
+            yPos += 5;
+
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'normal');
+
+            doc.text(`Simpang Teritip, ${tanggalSuratStr}`, marginRight, yPos, { align: 'right' });
+            yPos += 8;
+
+            doc.text(`Nomor`, marginLeft, yPos);
+            doc.text(`: ${nomorSurat || '-'}`, marginLeft + 22, yPos);
+            yPos += 6;
+            doc.text(`Lampiran`, marginLeft, yPos);
+            doc.text(`: -`, marginLeft + 22, yPos);
+            yPos += 6;
+            doc.text(`Perihal`, marginLeft, yPos);
+            doc.setFont(undefined, 'bold');
+            doc.text(`: Pemanggilan Orang Tua / Wali Murid`, marginLeft + 22, yPos);
+            doc.setFont(undefined, 'normal');
+            yPos += 12;
+
+            doc.text(`Kepada Yth. Bapak/Ibu Orang Tua/Wali`, marginLeft, yPos);
+            yPos += 6;
+            doc.setFont(undefined, 'bold');
+            doc.text(namaOrtu || namaSiswa, marginLeft, yPos);
+            doc.setFont(undefined, 'normal');
+            yPos += 6;
+            doc.text(`Siswa: ${namaSiswa}${nisn && nisn !== '-' ? ' (NISN: ' + nisn + ')' : ''} - Kelas ${kelas}`, marginLeft, yPos);
+            yPos += 6;
+            doc.text(`di`, marginLeft, yPos);
+            yPos += 6;
+            doc.text(`Tempat`, marginLeft + 10, yPos);
+            yPos += 12;
+
+            const teksUraian = perihal || `Dengan hormat,\nSehubungan dengan proses pembinaan kedisiplinan dan tata tertib siswa di lingkungan ${schoolName}, bersama surat ini kami memberitahukan bahwa ${namaSiswa} telah melakukan pelanggaran terhadap tata tertib sekolah.\nDemi kebaikan dan masa depan anak kita bersama, pihak sekolah memandang perlu untuk melakukan kerja sama dan koordinasi langsung dengan orang tua/wali murid. Sehubungan dengan hal tersebut, kami mengharap kehadiran Bapak/Ibu pada:`;
+
+            const paragrafUraian = teksUraian.split('\n').map(p => p.trim()).filter(p => p !== '');
+            paragrafUraian.forEach((p) => {
+                yPos = printParagrafJustify(doc, p, marginLeft, yPos, textWidth, 5.5);
+                yPos += 3;
+            });
+            yPos += 5;
+
+            doc.text(`Hari/Tanggal`, marginLeft + 15, yPos);
+            doc.text(`: ${hariTanggalStr}`, marginLeft + 45, yPos);
+            yPos += 6;
+            doc.text(`Pukul`, marginLeft + 15, yPos);
+            doc.text(`: ${pukul}`, marginLeft + 45, yPos);
+            yPos += 6;
+            doc.text(`Tempat`, marginLeft + 15, yPos);
+            doc.text(`: ${tempat}`, marginLeft + 45, yPos);
+            yPos += 12;
+
+            const paragraf3 = `Mengingat pentingnya hal tersebut, kami sangat mengharapkan kehadiran Bapak/Ibu. Demikian surat pemanggilan ini kami sampaikan. Atas perhatian, kerja sama, dan kehadiran Bapak/Ibu, kami ucapkan terima kasih.`;
+            yPos = printParagrafJustify(doc, paragraf3, marginLeft, yPos, textWidth, 5.5);
+            yPos += 20;
+
+            if (yPos > 250) { doc.addPage(); yPos = 20; }
+
+            const xSig = pageWidth - 60;
+            doc.text(`Mengetahui,`, xSig, yPos, { align: 'center' });
+            yPos += 5;
+            doc.text(`Kepala ${schoolName},`, xSig, yPos, { align: 'center' });
+            yPos += 25;
+            doc.setFont(undefined, 'bold');
+            doc.text(namaKepsek, xSig, yPos, { align: 'center' });
+            doc.setFont(undefined, 'normal');
+            yPos += 5;
+            doc.text(`NIP. ${nipKepsek}`, xSig, yPos, { align: 'center' });
+
+            doc.save(`Surat_Panggilan_${namaSiswa.replace(/\s+/g, '_')}.pdf`);
+
+            // Simpan riwayat pemanggilan ke tabel suratpanggilan
+            try {
+                const { error: insertError } = await absensiClient
+                    .from('suratpanggilan')
+                    .insert({
+                        nomor_surat: nomorSurat,
+                        nama_siswa: namaSiswa,
+                        nisn: (nisn && nisn !== '-') ? nisn : null,
+                        tanggal_pemanggilan: tanggalPanggilanVal,
+                        jam_pemanggilan: pukul
+                    });
+
+                if (insertError) throw insertError;
+            } catch (err) {
+                console.error('Gagal menyimpan riwayat surat panggilan:', err);
+                alert('Surat berhasil diunduh, namun riwayat pemanggilan gagal disimpan ke database: ' + err.message);
+            }
+
+            document.getElementById('suratPanggilanModal').classList.remove('active');
+        });
 
         async function loadPembinaanKelas(kelas) {
             const tbody = document.querySelector('#pembinaanTable tbody');
