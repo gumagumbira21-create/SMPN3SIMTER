@@ -133,6 +133,14 @@
         .custom-table th { background-color: #f8f9fa; color: #555; font-weight: 600; }
         .custom-table tr:hover { background-color: #f9f9f9; }
 
+        /* Modal Detail Siswa */
+        .detail-photo { width: 90px; height: 90px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+        .detail-photo-placeholder { width: 90px; height: 90px; border-radius: 10px; background: #f1f1f1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .detail-section-title { font-weight: 600; color: #333; margin: 18px 0 8px; padding-bottom: 6px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }
+        .detail-item label { display: block; font-size: 0.72rem; color: #999; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.02em; }
+        .detail-item span { font-size: 0.9rem; color: #222; font-weight: 500; word-break: break-word; }
+
         /* --- Gaya Modal --- */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
         .modal.active { display: flex; }
@@ -147,6 +155,27 @@
         .form-group label { display: block; margin-bottom: 8px; color: #666; font-size: 0.9rem; font-weight: 500; }
         .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; transition: border-color 0.3s; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+
+        .form-group select {
+            width: 100%;
+            padding: 10px 36px 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: #333;
+            background-color: #fff;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        .form-group select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        .form-group select:invalid, .form-group select option[value=""] { color: #888; }
         .form-group textarea { resize: vertical; min-height: 80px; }
         
         /* Styling khusus untuk input date agar lebih menarik */
@@ -157,6 +186,54 @@
         .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px; }
         .btn-secondary { background-color: #e2e8f0; color: #475569; }
         .btn-secondary:hover { background-color: #cbd5e1; }
+
+        /* --- Gaya Tab di Dalam Modal --- */
+        #siswaModal .modal-content { max-width: 720px; }
+        .tab-nav { display: flex; gap: 6px; border-bottom: 2px solid #eee; margin-bottom: 20px; overflow-x: auto; padding-bottom: 0; }
+        .tab-btn {
+            background: #f1f3f9; border: none; padding: 10px 18px; font-size: 0.9rem;
+            font-weight: 600; color: #777; cursor: pointer; white-space: nowrap;
+            border-radius: 8px 8px 0 0; margin-bottom: -2px; transition: all 0.2s;
+        }
+        .tab-btn:hover { color: var(--primary-color); background: #e8eafc; }
+        .tab-btn.active {
+            color: #fff;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 -2px 8px rgba(102, 126, 234, 0.25);
+        }
+        .tab-btn.active:hover { color: #fff; }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; animation: fadeInTab 0.25s ease; }
+        @keyframes fadeInTab { from { opacity: 0; } to { opacity: 1; } }
+
+        .section-title {
+            margin: 22px 0 12px; color: #555; font-size: 0.9rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.3px;
+            border-bottom: 1px solid #eee; padding-bottom: 6px;
+        }
+        .section-title:first-child { margin-top: 0; }
+
+        .family-group { border: 1px solid #e5e7eb; border-radius: 8px; padding: 15px 15px 5px; margin-bottom: 18px; }
+        .family-group legend { padding: 0 8px; font-weight: 700; color: var(--secondary-color); font-size: 0.9rem; }
+
+        /* --- Gaya Upload Foto Siswa --- */
+        .foto-upload-group { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; }
+        .foto-preview-box {
+            width: 90px; height: 90px; border-radius: 50%; flex-shrink: 0;
+            overflow: hidden; background: #f1f3f9; border: 2px dashed #ccc;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .foto-preview-box img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .foto-placeholder-icon { font-size: 2rem; color: #bbb; }
+        .foto-upload-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+        .foto-upload-actions .btn-row { display: flex; gap: 8px; }
+        .btn-sm { padding: 6px 14px; font-size: 0.8rem; }
+        .foto-hint { font-size: 0.75rem; color: #999; margin: 0; }
+
+        @media (max-width: 768px) {
+            #siswaModal .modal-content { max-width: 95%; }
+            .tab-btn { padding: 8px 10px; font-size: 0.82rem; }
+        }
 
         /* Search Box Style */
         .search-box { position: relative; min-width: 250px; }
@@ -300,44 +377,501 @@
                 <h3>Tambah Siswa Baru</h3>
                 <span class="close-modal">&times;</span>
             </div>
+
+            <div class="tab-nav">
+                <button type="button" class="tab-btn active" data-tab="tabDataPribadi">Data Pribadi</button>
+                <button type="button" class="tab-btn" data-tab="tabDataKeluarga">Data Keluarga</button>
+            </div>
+
             <form id="siswaForm">
                 <!-- Input Ngumpet buat Edit -->
                 <input type="hidden" id="isEditMode" value="false">
-                <div class="form-group">
-                    <label for="nisn">NISN</label>
-                    <input type="text" id="nisn" name="nisn" placeholder="Nomor Induk Siswa Nasional" required>
-                </div>
-                <div class="form-group">
-                    <label for="namaSiswa">Nama Siswa</label>
-                    <input type="text" id="namaSiswa" name="namaSiswa" placeholder="Nama Lengkap Siswa" required>
-                </div>
-                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div>
-                        <label for="tempatLahir">Tempat Lahir</label>
-                        <input type="text" id="tempatLahir" name="tempatLahir" placeholder="Kota Kelahiran">
+
+                <!-- ============ TAB: DATA PRIBADI ============ -->
+                <div class="tab-pane active" id="tabDataPribadi">
+                    <div class="foto-upload-group">
+                        <div class="foto-preview-box" id="fotoPreviewBox">
+                            <img id="fotoPreviewImg" src="" alt="Foto Siswa">
+                            <i class="fas fa-user foto-placeholder-icon" id="fotoPlaceholderIcon"></i>
+                        </div>
+                        <div class="foto-upload-actions">
+                            <div class="btn-row">
+                                <label for="fotoInput" class="btn btn-secondary btn-sm" style="margin:0;">
+                                    <i class="fas fa-camera"></i> Pilih Foto
+                                </label>
+                                <button type="button" class="btn btn-sm" id="removeFotoBtn" style="background:#fee2e2; color:#dc2626; display:none;">
+                                    <i class="fas fa-times"></i> Hapus
+                                </button>
+                            </div>
+                            <input type="file" id="fotoInput" accept="image/*" style="display:none;">
+                            <input type="hidden" id="fotoUrl" name="fotoUrl" value="">
+                            <p class="foto-hint">Format JPG/PNG, ukuran maks 2MB</p>
+                        </div>
                     </div>
-                    <div>
-                        <label for="tanggalLahir">Tanggal Lahir</label>
-                        <input type="date" id="tanggalLahir" name="tanggalLahir">
+                    <div class="form-group">
+                        <label for="nisn">NISN</label>
+                        <input type="text" id="nisn" name="nisn" placeholder="Nomor Induk Siswa Nasional" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="namaSiswa">Nama Siswa</label>
+                        <input type="text" id="namaSiswa" name="namaSiswa" placeholder="Nama Lengkap Siswa" required>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="nipd">NIPD</label>
+                            <input type="text" id="nipd" name="nipd" placeholder="Nomor Induk Peserta Didik">
+                        </div>
+                        <div>
+                            <label for="jenisKelamin">Jenis Kelamin</label>
+                            <select id="jenisKelamin" name="jenisKelamin">
+                                <option value="">-- Pilih --</option>
+                                <option>Laki-laki</option>
+                                <option>Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="tempatLahir">Tempat Lahir</label>
+                            <input type="text" id="tempatLahir" name="tempatLahir" placeholder="Kota Kelahiran">
+                        </div>
+                        <div>
+                            <label for="tanggalLahir">Tanggal Lahir</label>
+                            <input type="date" id="tanggalLahir" name="tanggalLahir">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="nik">NIK</label>
+                            <input type="text" id="nik" name="nik" placeholder="Nomor Induk Kependudukan" maxlength="16">
+                        </div>
+                        <div>
+                            <label for="agama">Agama</label>
+                            <select id="agama" name="agama">
+                                <option value="">-- Pilih Agama --</option>
+                                <option>Islam</option>
+                                <option>Kristen</option>
+                                <option>Katolik</option>
+                                <option>Hindu</option>
+                                <option>Buddha</option>
+                                <option>Konghucu</option>
+                                <option>Lainnya</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="nomorAktaKelahiran">Nomor Akta Kelahiran</label>
+                            <input type="text" id="nomorAktaKelahiran" name="nomorAktaKelahiran" placeholder="Nomor Akta Kelahiran">
+                        </div>
+                        <div>
+                            <label for="kebutuhanKhusus">Kebutuhan Khusus</label>
+                            <select id="kebutuhanKhusus" name="kebutuhanKhusus">
+                                <option value="">Tidak Ada</option>
+                                <option>Netra</option>
+                                <option>Rungu</option>
+                                <option>Grahita</option>
+                                <option>Daksa</option>
+                                <option>Laras</option>
+                                <option>Wicara</option>
+                                <option>Tunaganda</option>
+                                <option>Hiperaktif</option>
+                                <option>Cerdas Istimewa</option>
+                                <option>Bakat Istimewa</option>
+                                <option>Kesulitan Belajar</option>
+                                <option>Autis</option>
+                                <option>Down Syndrome</option>
+                                <option>Lainnya</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="sekolahAsal">Sekolah Asal</label>
+                            <input type="text" id="sekolahAsal" name="sekolahAsal" placeholder="Nama TK/Sekolah Asal">
+                        </div>
+                        <div>
+                            <label for="skhun">SKHUN</label>
+                            <input type="text" id="skhun" name="skhun" placeholder="Nomor SKHUN">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="rombelSaatIni">Rombel Saat Ini</label>
+                            <input type="text" id="rombelSaatIni" name="rombelSaatIni" placeholder="Contoh: X TKJ 1">
+                        </div>
+                        <div>
+                            <label for="jenisTinggal">Jenis Tinggal</label>
+                            <select id="jenisTinggal" name="jenisTinggal">
+                                <option value="">-- Pilih --</option>
+                                <option>Bersama Orang Tua</option>
+                                <option>Bersama Saudara</option>
+                                <option>Kost</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="nomorPesertaUjian">Nomor Peserta Ujian</label>
+                            <input type="text" id="nomorPesertaUjian" name="nomorPesertaUjian" placeholder="Nomor Peserta Ujian">
+                        </div>
+                        <div>
+                            <label for="nomorSeriIjazah">Nomor Seri Ijazah</label>
+                            <input type="text" id="nomorSeriIjazah" name="nomorSeriIjazah" placeholder="Nomor Seri Ijazah">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="jumlahSaudara">Jumlah Saudara</label>
+                            <input type="number" id="jumlahSaudara" name="jumlahSaudara" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label for="anakKe">Anak Ke</label>
+                            <input type="number" id="anakKe" name="anakKe" min="1" placeholder="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomorKK">Nomor KK</label>
+                        <input type="text" id="nomorKK" name="nomorKK" placeholder="Nomor Kartu Keluarga" maxlength="16">
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="beratBadan">Berat Badan (kg)</label>
+                            <input type="number" id="beratBadan" name="beratBadan" step="0.1" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label for="tinggiBadan">Tinggi Badan (cm)</label>
+                            <input type="number" id="tinggiBadan" name="tinggiBadan" step="0.1" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label for="lingkarKepala">Lingkar Kepala (cm)</label>
+                            <input type="number" id="lingkarKepala" name="lingkarKepala" step="0.1" min="0" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="modaTransportasi">Moda Transportasi</label>
+                            <select id="modaTransportasi" name="modaTransportasi">
+                                <option value="">-- Pilih --</option>
+                                <option>Jalan Kaki</option>
+                                <option>Sepeda</option>
+                                <option>Sepeda Motor</option>
+                                <option>Mobil / Antar Jemput</option>
+                                <option>Angkutan Umum</option>
+                                <option>Lainnya</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="jarakKeSekolah">Jarak Ke Sekolah (km)</label>
+                            <input type="number" id="jarakKeSekolah" name="jarakKeSekolah" step="0.1" min="0" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="section-title">Data Bantuan / Kesejahteraan Sosial</div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="penerimaKPS">Penerima KPS</label>
+                            <select id="penerimaKPS" name="penerimaKPS">
+                                <option value="">-- Pilih --</option>
+                                <option>Ya</option>
+                                <option>Tidak</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="nomorKPS">Nomor KPS</label>
+                            <input type="text" id="nomorKPS" name="nomorKPS" placeholder="Nomor KPS">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="penerimaKIP">Penerima KIP</label>
+                            <select id="penerimaKIP" name="penerimaKIP">
+                                <option value="">-- Pilih --</option>
+                                <option>Ya</option>
+                                <option>Tidak</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="nomorKIP">Nomor KIP</label>
+                            <input type="text" id="nomorKIP" name="nomorKIP" placeholder="Nomor KIP">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="namaPadaKIP">Nama Pada KIP</label>
+                            <input type="text" id="namaPadaKIP" name="namaPadaKIP" placeholder="Sesuai kartu KIP">
+                        </div>
+                        <div>
+                            <label for="nomorKKS">Nomor KKS</label>
+                            <input type="text" id="nomorKKS" name="nomorKKS" placeholder="Nomor KKS">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="layakPIP">Layak PIP</label>
+                            <select id="layakPIP" name="layakPIP">
+                                <option value="">-- Pilih --</option>
+                                <option>Ya</option>
+                                <option>Tidak</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="alasanLayakPIP">Alasan Layak PIP</label>
+                            <input type="text" id="alasanLayakPIP" name="alasanLayakPIP" placeholder="Contoh: Pemegang KIP / PKH / Yatim Piatu, dll.">
+                        </div>
+                    </div>
+
+                    <div class="section-title">Data Rekening Bank (Penyaluran Bantuan)</div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="namaBank">Nama Bank</label>
+                            <input type="text" id="namaBank" name="namaBank" placeholder="Contoh: BRI, BNI, Mandiri">
+                        </div>
+                        <div>
+                            <label for="nomorRekening">Nomor Rekening</label>
+                            <input type="text" id="nomorRekening" name="nomorRekening" placeholder="Nomor Rekening">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="namaPadaRekening">Nama Pada Rekening</label>
+                        <input type="text" id="namaPadaRekening" name="namaPadaRekening" placeholder="Sesuai buku rekening">
+                    </div>
+
+                    <div class="section-title">Data Kontak</div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="tlp">No. Telepon (Rumah)</label>
+                            <input type="text" id="tlp" name="tlp" placeholder="Nomor Telepon Rumah">
+                        </div>
+                        <div>
+                            <label for="hp">No. HP</label>
+                            <input type="text" id="hp" name="hp" placeholder="Nomor HP Aktif">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Alamat Email">
+                    </div>
+
+                    <div class="section-title">Alamat Tempat Tinggal</div>
+                    <div class="form-group">
+                        <label for="alamatJalan">Alamat Jalan/Komplek/Gang</label>
+                        <input type="text" id="alamatJalan" name="alamatJalan" placeholder="Nama Jalan/Komplek/Gang, No. Rumah">
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="rt">RT</label>
+                            <input type="text" id="rt" name="rt" placeholder="001">
+                        </div>
+                        <div>
+                            <label for="rw">RW</label>
+                            <input type="text" id="rw" name="rw" placeholder="001">
+                        </div>
+                        <div>
+                            <label for="kodePos">Kode Pos</label>
+                            <input type="text" id="kodePos" name="kodePos" placeholder="Kode Pos">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="dusun">Desa/Dusun</label>
+                            <input type="text" id="dusun" name="dusun" placeholder="Nama Desa/Dusun">
+                        </div>
+                        <div>
+                            <label for="kelurahan">Kelurahan</label>
+                            <input type="text" id="kelurahan" name="kelurahan" placeholder="Nama Kelurahan">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="kecamatan">Kecamatan</label>
+                        <input type="text" id="kecamatan" name="kecamatan" placeholder="Nama Kecamatan">
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="lintang">Lintang</label>
+                            <input type="text" id="lintang" name="lintang" placeholder="Contoh: -2.123456">
+                        </div>
+                        <div>
+                            <label for="bujur">Bujur</label>
+                            <input type="text" id="bujur" name="bujur" placeholder="Contoh: 105.123456">
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="namaAyah">Nama Ayah</label>
-                    <input type="text" id="namaAyah" name="namaAyah" placeholder="Nama Ayah Kandung">
+
+                <!-- ============ TAB: DATA KELUARGA ============ -->
+                <div class="tab-pane" id="tabDataKeluarga">
+                    <fieldset class="family-group">
+                        <legend>Data Ayah</legend>
+                        <div class="form-group">
+                            <label for="namaAyah">Nama Ayah</label>
+                            <input type="text" id="namaAyah" name="namaAyah" placeholder="Nama Ayah Kandung">
+                        </div>
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label for="tahunLahirAyah">Tahun Lahir</label>
+                                <input type="number" id="tahunLahirAyah" name="tahunLahirAyah" placeholder="1985" min="1900" max="2100">
+                            </div>
+                            <div>
+                                <label for="pendidikanAyah">Pendidikan Terakhir</label>
+                                <select id="pendidikanAyah" name="pendidikanAyah">
+                                    <option value="">-- Pilih --</option>
+                                    <option>Tidak Sekolah</option>
+                                    <option>SD</option>
+                                    <option>SMP</option>
+                                    <option>SMA/SMK</option>
+                                    <option>D1/D2/D3</option>
+                                    <option>S1</option>
+                                    <option>S2</option>
+                                    <option>S3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaanAyah">Pekerjaan</label>
+                            <input type="text" id="pekerjaanAyah" name="pekerjaanAyah" placeholder="Pekerjaan Ayah">
+                        </div>
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label for="penghasilanAyah">Penghasilan</label>
+                                <select id="penghasilanAyah" name="penghasilanAyah">
+                                    <option value="">-- Pilih --</option>
+                                    <option>Tidak Berpenghasilan</option>
+                                    <option>Kurang dari Rp 1.000.000</option>
+                                    <option>Rp 1.000.000 - Rp 2.000.000</option>
+                                    <option>Rp 2.000.000 - Rp 5.000.000</option>
+                                    <option>Lebih dari Rp 5.000.000</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="nikAyah">NIK</label>
+                                <input type="text" id="nikAyah" name="nikAyah" placeholder="Nomor Induk Kependudukan" maxlength="16">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="family-group">
+                        <legend>Data Ibu</legend>
+                        <div class="form-group">
+                            <label for="namaIbu">Nama Ibu</label>
+                            <input type="text" id="namaIbu" name="namaIbu" placeholder="Nama Ibu Kandung">
+                        </div>
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label for="tahunLahirIbu">Tahun Lahir</label>
+                                <input type="number" id="tahunLahirIbu" name="tahunLahirIbu" placeholder="1987" min="1900" max="2100">
+                            </div>
+                            <div>
+                                <label for="pendidikanIbu">Pendidikan Terakhir</label>
+                                <select id="pendidikanIbu" name="pendidikanIbu">
+                                    <option value="">-- Pilih --</option>
+                                    <option>Tidak Sekolah</option>
+                                    <option>SD</option>
+                                    <option>SMP</option>
+                                    <option>SMA/SMK</option>
+                                    <option>D1/D2/D3</option>
+                                    <option>S1</option>
+                                    <option>S2</option>
+                                    <option>S3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaanIbu">Pekerjaan</label>
+                            <input type="text" id="pekerjaanIbu" name="pekerjaanIbu" placeholder="Pekerjaan Ibu">
+                        </div>
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label for="penghasilanIbu">Penghasilan</label>
+                                <select id="penghasilanIbu" name="penghasilanIbu">
+                                    <option value="">-- Pilih --</option>
+                                    <option>Tidak Berpenghasilan</option>
+                                    <option>Kurang dari Rp 1.000.000</option>
+                                    <option>Rp 1.000.000 - Rp 2.000.000</option>
+                                    <option>Rp 2.000.000 - Rp 5.000.000</option>
+                                    <option>Lebih dari Rp 5.000.000</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="nikIbu">NIK</label>
+                                <input type="text" id="nikIbu" name="nikIbu" placeholder="Nomor Induk Kependudukan" maxlength="16">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="family-group">
+                        <legend>Data Wali</legend>
+                        <div class="form-group">
+                            <label for="namaWali">Nama Wali</label>
+                            <input type="text" id="namaWali" name="namaWali" placeholder="Nama Wali (jika ada)">
+                        </div>
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label for="tahunLahirWali">Tahun Lahir</label>
+                                <input type="number" id="tahunLahirWali" name="tahunLahirWali" placeholder="1980" min="1900" max="2100">
+                            </div>
+                            <div>
+                                <label for="pendidikanWali">Pendidikan Terakhir</label>
+                                <select id="pendidikanWali" name="pendidikanWali">
+                                    <option value="">-- Pilih --</option>
+                                    <option>Tidak Sekolah</option>
+                                    <option>SD</option>
+                                    <option>SMP</option>
+                                    <option>SMA/SMK</option>
+                                    <option>D1/D2/D3</option>
+                                    <option>S1</option>
+                                    <option>S2</option>
+                                    <option>S3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaanWali">Pekerjaan</label>
+                            <input type="text" id="pekerjaanWali" name="pekerjaanWali" placeholder="Pekerjaan Wali">
+                        </div>
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label for="penghasilanWali">Penghasilan</label>
+                                <select id="penghasilanWali" name="penghasilanWali">
+                                    <option value="">-- Pilih --</option>
+                                    <option>Tidak Berpenghasilan</option>
+                                    <option>Kurang dari Rp 1.000.000</option>
+                                    <option>Rp 1.000.000 - Rp 2.000.000</option>
+                                    <option>Rp 2.000.000 - Rp 5.000.000</option>
+                                    <option>Lebih dari Rp 5.000.000</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="nikWali">NIK</label>
+                                <input type="text" id="nikWali" name="nikWali" placeholder="Nomor Induk Kependudukan" maxlength="16">
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="form-group">
-                    <label for="namaIbu">Nama Ibu</label>
-                    <input type="text" id="namaIbu" name="namaIbu" placeholder="Nama Ibu Kandung">
-                </div>
-                <div class="form-group">
-                    <label for="alamat">Alamat</label>
-                    <textarea id="alamat" name="alamat" placeholder="Alamat Lengkap" required></textarea>
-                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal Detail Siswa -->
+    <div id="detailSiswaModal" class="modal">
+        <div class="modal-content" style="max-width: 720px;">
+            <div class="modal-header">
+                <h3>Detail Data Siswa</h3>
+                <span class="close-modal" id="closeDetailModal">&times;</span>
+            </div>
+
+            <div id="detailSiswaBody" style="max-height: 65vh; overflow-y: auto; padding: 5px 5px 10px;"></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="detailCancelBtn">Cancel</button>
+                <button type="button" class="btn" id="detailDeleteBtn" style="background:#fee2e2; color:#dc2626;"><i class="fas fa-trash"></i> Hapus</button>
+                <button type="button" class="btn btn-primary" id="detailEditBtn"><i class="fas fa-edit"></i> Edit</button>
+            </div>
         </div>
     </div>
 
@@ -376,6 +910,54 @@
         document.addEventListener('DOMContentLoaded', loadSchoolIdentity);
         document.addEventListener('DOMContentLoaded', loadSiswaData);
 
+        // --- Logika Upload Foto Siswa ---
+        const fotoInput = document.getElementById('fotoInput');
+        const fotoPreviewImg = document.getElementById('fotoPreviewImg');
+        const fotoPlaceholderIcon = document.getElementById('fotoPlaceholderIcon');
+        const fotoUrlInput = document.getElementById('fotoUrl');
+        const removeFotoBtn = document.getElementById('removeFotoBtn');
+        let selectedFotoFile = null;
+
+        function showFotoPreview(url) {
+            fotoPreviewImg.src = url;
+            fotoPreviewImg.style.display = 'block';
+            fotoPlaceholderIcon.style.display = 'none';
+            removeFotoBtn.style.display = 'inline-flex';
+        }
+
+        function resetFotoPreview() {
+            selectedFotoFile = null;
+            fotoUrlInput.value = '';
+            fotoInput.value = '';
+            fotoPreviewImg.src = '';
+            fotoPreviewImg.style.display = 'none';
+            fotoPlaceholderIcon.style.display = 'block';
+            removeFotoBtn.style.display = 'none';
+        }
+
+        fotoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                alert('File yang dipilih harus berupa gambar.');
+                fotoInput.value = '';
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Ukuran foto maksimal 2MB.');
+                fotoInput.value = '';
+                return;
+            }
+
+            selectedFotoFile = file;
+            const reader = new FileReader();
+            reader.onload = (ev) => showFotoPreview(ev.target.result);
+            reader.readAsDataURL(file);
+        });
+
+        removeFotoBtn.addEventListener('click', resetFotoPreview);
+
         // --- Logika Modal ---
         const modal = document.getElementById('siswaModal');
         const addBtn = document.getElementById('addSiswaBtn');
@@ -385,12 +967,31 @@
         const isEditModeInput = document.getElementById('isEditMode');
         const nisnInput = document.getElementById('nisn');
 
+        // --- Logika Tab Modal ---
+        const tabBtns = document.querySelectorAll('#siswaModal .tab-btn');
+        const tabPanes = document.querySelectorAll('#siswaModal .tab-pane');
+
+        function switchTab(tabId) {
+            tabBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+            tabPanes.forEach(pane => pane.classList.toggle('active', pane.id === tabId));
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+
+        function resetToFirstTab() {
+            switchTab(tabBtns[0].dataset.tab);
+        }
+
         // Buka Modal
         addBtn.addEventListener('click', () => {
             siswaForm.reset();
             isEditModeInput.value = "false";
             nisnInput.readOnly = false; // NISN bisa diedit saat tambah baru
             document.querySelector('.modal-header h3').textContent = "Tambah Siswa Baru";
+            resetToFirstTab();
+            resetFotoPreview();
             modal.classList.add('active');
         });
 
@@ -398,6 +999,8 @@
         function closeModal() {
             modal.classList.remove('active');
             siswaForm.reset();
+            resetToFirstTab();
+            resetFotoPreview();
         }
 
         closeSpan.addEventListener('click', closeModal);
@@ -453,15 +1056,14 @@
                     <td>${siswa.nama_ibu || '-'}</td>
                     <td>${siswa.alamat}</td>
                     <td>
-                        <button onclick="editSiswa('${siswa.nisn}')" style="background:none; border:none; color:#60a5fa; cursor:pointer;" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteSiswa('${siswa.nisn}')" style="background:none; border:none; color:#f87171; cursor:pointer; margin-left:10px;" title="Hapus"><i class="fas fa-trash"></i></button>
+                        <button onclick="viewSiswa('${siswa.nisn}')" style="background:none; border:none; color:#60a5fa; cursor:pointer;" title="Lihat Detail"><i class="fas fa-eye"></i></button>
                     </td>
                 `;
                 tableBody.appendChild(row);
             });
         }
 
-        // Cari Siswa
+        // --- Cari Siswa ---
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             const filteredData = allSiswaData.filter(siswa => 
@@ -471,24 +1073,246 @@
             renderSiswaTable(filteredData);
         });
 
+        // --- Modal Detail Siswa ---
+        const detailSiswaModal = document.getElementById('detailSiswaModal');
+        const detailSiswaBody = document.getElementById('detailSiswaBody');
+        const closeDetailModal = document.getElementById('closeDetailModal');
+        const detailCancelBtn = document.getElementById('detailCancelBtn');
+        const detailEditBtn = document.getElementById('detailEditBtn');
+        const detailDeleteBtn = document.getElementById('detailDeleteBtn');
+        let currentDetailNisn = null;
+
+        window.viewSiswa = function(nisn) {
+            const siswa = allSiswaData.find(s => s.nisn == nisn);
+            if (!siswa) return;
+            currentDetailNisn = nisn;
+
+            const v = (val, suffix = '') => (val === null || val === undefined || val === '') ? '-' : `${val}${suffix}`;
+
+            const fotoHtml = siswa.photo
+                ? `<img src="${siswa.photo}" class="detail-photo" alt="Foto Siswa">`
+                : `<div class="detail-photo-placeholder"><i class="fas fa-user" style="font-size:1.8rem;color:#bbb;"></i></div>`;
+
+            detailSiswaBody.innerHTML = `
+                <div style="display:flex; gap:15px; align-items:center;">
+                    ${fotoHtml}
+                    <div>
+                        <div style="font-size:1.1rem; font-weight:700; color:#222;">${v(siswa.nama_siswa)}</div>
+                        <div style="color:#888; font-size:0.85rem;">NISN: ${v(siswa.nisn)} &nbsp;•&nbsp; NIPD: ${v(siswa.nipd)}</div>
+                    </div>
+                </div>
+
+                <div class="detail-section-title">Data Pribadi</div>
+                <div class="detail-grid">
+                    <div class="detail-item"><label>Jenis Kelamin</label><span>${v(siswa.jk)}</span></div>
+                    <div class="detail-item"><label>Tempat, Tanggal Lahir</label><span>${v(siswa.tempat_lahir)}, ${v(siswa.tanggal_lahir)}</span></div>
+                    <div class="detail-item"><label>NIK</label><span>${v(siswa.nik)}</span></div>
+                    <div class="detail-item"><label>Agama</label><span>${v(siswa.agama)}</span></div>
+                    <div class="detail-item"><label>Nomor Akta Kelahiran</label><span>${v(siswa.nomor_akta)}</span></div>
+                    <div class="detail-item"><label>Kebutuhan Khusus</label><span>${v(siswa.kebutuhan_khusus)}</span></div>
+                    <div class="detail-item"><label>Sekolah Asal</label><span>${v(siswa.sekolah_asal)}</span></div>
+                    <div class="detail-item"><label>SKHUN</label><span>${v(siswa.skhun)}</span></div>
+                    <div class="detail-item"><label>Rombel Saat Ini</label><span>${v(siswa.rombel_saat_ini)}</span></div>
+                    <div class="detail-item"><label>Jenis Tinggal</label><span>${v(siswa.jenis_tinggal)}</span></div>
+                    <div class="detail-item"><label>Moda Transportasi</label><span>${v(siswa.alat_transportasi)}</span></div>
+                    <div class="detail-item"><label>Jarak ke Sekolah</label><span>${v(siswa.jarak_kesekolah, ' km')}</span></div>
+                    <div class="detail-item"><label>Nomor Peserta Ujian</label><span>${v(siswa.nomor_peserta_ujian)}</span></div>
+                    <div class="detail-item"><label>Nomor Seri Ijazah</label><span>${v(siswa.nomor_seri_ijazah)}</span></div>
+                    <div class="detail-item"><label>Berat / Tinggi / Lingkar Kepala</label><span>${v(siswa.berat_badan, ' kg')} / ${v(siswa.tinggi_badan, ' cm')} / ${v(siswa.lingkar_kepala, ' cm')}</span></div>
+                    <div class="detail-item"><label>Jumlah Saudara / Anak Ke</label><span>${v(siswa.jumlah_saudara)} / ${v(siswa.anak_ke)}</span></div>
+                    <div class="detail-item"><label>Nomor KK</label><span>${v(siswa.nomor_kk)}</span></div>
+                </div>
+
+                <div class="detail-section-title">Data Kontak</div>
+                <div class="detail-grid">
+                    <div class="detail-item"><label>No. Telepon</label><span>${v(siswa.tlp)}</span></div>
+                    <div class="detail-item"><label>No. HP</label><span>${v(siswa.hp)}</span></div>
+                    <div class="detail-item"><label>Email</label><span>${v(siswa.email)}</span></div>
+                </div>
+
+                <div class="detail-section-title">Alamat</div>
+                <div class="detail-grid">
+                    <div class="detail-item" style="grid-column: 1 / -1;"><label>Alamat Lengkap</label><span>${v(siswa.alamat)}</span></div>
+                    <div class="detail-item"><label>RT / RW</label><span>${v(siswa.rt)} / ${v(siswa.rw)}</span></div>
+                    <div class="detail-item"><label>Kode Pos</label><span>${v(siswa.kode_pos)}</span></div>
+                    <div class="detail-item"><label>Dusun</label><span>${v(siswa.dusun)}</span></div>
+                    <div class="detail-item"><label>Kelurahan</label><span>${v(siswa.kelurahan)}</span></div>
+                    <div class="detail-item"><label>Kecamatan</label><span>${v(siswa.kecamatan)}</span></div>
+                    <div class="detail-item"><label>Lintang / Bujur</label><span>${v(siswa.lintang)} / ${v(siswa.bujur)}</span></div>
+                </div>
+
+                <div class="detail-section-title">Data Bantuan / Kesejahteraan Sosial</div>
+                <div class="detail-grid">
+                    <div class="detail-item"><label>Penerima KPS</label><span>${v(siswa.penerima_kps)}</span></div>
+                    <div class="detail-item"><label>Nomor KPS</label><span>${v(siswa.nomor_kps)}</span></div>
+                    <div class="detail-item"><label>Penerima KIP</label><span>${v(siswa.penerima_kip)}</span></div>
+                    <div class="detail-item"><label>Nomor KIP</label><span>${v(siswa.nomor_kip)}</span></div>
+                    <div class="detail-item"><label>Nama Pada KIP</label><span>${v(siswa.nama_dikip)}</span></div>
+                    <div class="detail-item"><label>Nomor KKS</label><span>${v(siswa.nomor_kks)}</span></div>
+                    <div class="detail-item"><label>Layak PIP</label><span>${v(siswa.layak_pip)}</span></div>
+                    <div class="detail-item" style="grid-column: 1 / -1;"><label>Alasan Layak PIP</label><span>${v(siswa.alasan_layah)}</span></div>
+                </div>
+
+                <div class="detail-section-title">Data Rekening Bank</div>
+                <div class="detail-grid">
+                    <div class="detail-item"><label>Bank</label><span>${v(siswa.bank)}</span></div>
+                    <div class="detail-item"><label>Nomor Rekening</label><span>${v(siswa.nomor_rekening)}</span></div>
+                    <div class="detail-item"><label>Atas Nama</label><span>${v(siswa.rekening_atasnama)}</span></div>
+                </div>
+
+                <div class="detail-section-title">Data Ayah</div>
+                <div class="detail-grid">
+                    <div class="detail-item"><label>Nama</label><span>${v(siswa.nama_ayah)}</span></div>
+                    <div class="detail-item"><label>Tahun Lahir</label><span>${v(siswa.tahun_lahir_ayah)}</span></div>
+                    <div class="detail-item"><label>Pendidikan</label><span>${v(siswa.jenjang_pendidikan_ayah)}</span></div>
+                    <div class="detail-item"><label>Pekerjaan</label><span>${v(siswa.pekerjaan_ayah)}</span></div>
+                    <div class="detail-item"><label>Penghasilan</label><span>${v(siswa.penghasilan_ayah)}</span></div>
+                    <div class="detail-item"><label>NIK</label><span>${v(siswa.nik_ayah)}</span></div>
+                </div>
+
+                <div class="detail-section-title">Data Ibu</div>
+                <div class="detail-grid">
+                    <div class="detail-item"><label>Nama</label><span>${v(siswa.nama_ibu)}</span></div>
+                    <div class="detail-item"><label>Tahun Lahir</label><span>${v(siswa.tahun_lahir_ibu)}</span></div>
+                    <div class="detail-item"><label>Pendidikan</label><span>${v(siswa.jenjang_pendidikan_ibu)}</span></div>
+                    <div class="detail-item"><label>Pekerjaan</label><span>${v(siswa.pekerjaan_ibu)}</span></div>
+                    <div class="detail-item"><label>Penghasilan</label><span>${v(siswa.penghasil_ibu)}</span></div>
+                    <div class="detail-item"><label>NIK</label><span>${v(siswa.nik_ibu)}</span></div>
+                </div>
+
+                <div class="detail-section-title">Data Wali</div>
+                <div class="detail-grid">
+                    <div class="detail-item"><label>Nama</label><span>${v(siswa.nama_wali)}</span></div>
+                    <div class="detail-item"><label>Tahun Lahir</label><span>${v(siswa.tahun_lahir_wali)}</span></div>
+                    <div class="detail-item"><label>Pendidikan</label><span>${v(siswa.jenjang_pendidikan_wali)}</span></div>
+                    <div class="detail-item"><label>Pekerjaan</label><span>${v(siswa.pekerjaan_wali)}</span></div>
+                    <div class="detail-item"><label>Penghasilan</label><span>${v(siswa.penghasilan_wali)}</span></div>
+                    <div class="detail-item"><label>NIK</label><span>${v(siswa.nik_wali)}</span></div>
+                </div>
+            `;
+
+            detailSiswaModal.classList.add('active');
+        };
+
+        function closeDetailSiswaModal() {
+            detailSiswaModal.classList.remove('active');
+            currentDetailNisn = null;
+        }
+
+        closeDetailModal.addEventListener('click', closeDetailSiswaModal);
+        detailCancelBtn.addEventListener('click', closeDetailSiswaModal);
+        window.addEventListener('click', (e) => {
+            if (e.target === detailSiswaModal) closeDetailSiswaModal();
+        });
+
+        detailEditBtn.addEventListener('click', () => {
+            if (!currentDetailNisn) return;
+            const nisnToEdit = currentDetailNisn;
+            closeDetailSiswaModal();
+            editSiswa(nisnToEdit);
+        });
+
+        detailDeleteBtn.addEventListener('click', async () => {
+            if (!currentDetailNisn) return;
+            const success = await deleteSiswa(currentDetailNisn);
+            if (success) closeDetailSiswaModal();
+        });
+
         // --- Edit Siswa ---
         window.editSiswa = function(nisn) {
             const siswa = allSiswaData.find(s => s.nisn == nisn);
             if (siswa) {
                 // Isi form pake data yg dipilih
+                // -- Foto --
+                if (siswa.photo) {
+                    fotoUrlInput.value = siswa.photo;
+                    showFotoPreview(siswa.photo);
+                } else {
+                    resetFotoPreview();
+                }
+                selectedFotoFile = null;
+
+                // -- Data Pribadi --
                 nisnInput.value = siswa.nisn;
                 nisnInput.readOnly = true; // NISN tidak boleh diubah saat edit (Primary Key)
-                document.getElementById('namaSiswa').value = siswa.nama_siswa;
+                document.getElementById('namaSiswa').value = siswa.nama_siswa || '';
+                document.getElementById('nipd').value = siswa.nipd || '';
+                document.getElementById('jenisKelamin').value = siswa.jk || '';
                 document.getElementById('tempatLahir').value = siswa.tempat_lahir || '';
                 document.getElementById('tanggalLahir').value = siswa.tanggal_lahir || '';
+                document.getElementById('nik').value = siswa.nik || '';
+                document.getElementById('agama').value = siswa.agama || '';
+                document.getElementById('nomorAktaKelahiran').value = siswa.nomor_akta || '';
+                document.getElementById('kebutuhanKhusus').value = siswa.kebutuhan_khusus || '';
+                document.getElementById('sekolahAsal').value = siswa.sekolah_asal || '';
+                document.getElementById('skhun').value = siswa.skhun || '';
+                document.getElementById('rombelSaatIni').value = siswa.rombel_saat_ini || '';
+                document.getElementById('jenisTinggal').value = siswa.jenis_tinggal || '';
+                document.getElementById('nomorPesertaUjian').value = siswa.nomor_peserta_ujian || '';
+                document.getElementById('nomorSeriIjazah').value = siswa.nomor_seri_ijazah || '';
+                document.getElementById('jumlahSaudara').value = siswa.jumlah_saudara ?? '';
+                document.getElementById('anakKe').value = siswa.anak_ke ?? '';
+                document.getElementById('nomorKK').value = siswa.nomor_kk || '';
+                document.getElementById('beratBadan').value = siswa.berat_badan ?? '';
+                document.getElementById('tinggiBadan').value = siswa.tinggi_badan ?? '';
+                document.getElementById('lingkarKepala').value = siswa.lingkar_kepala ?? '';
+                document.getElementById('modaTransportasi').value = siswa.alat_transportasi || '';
+                document.getElementById('jarakKeSekolah').value = siswa.jarak_kesekolah ?? '';
+                document.getElementById('penerimaKPS').value = siswa.penerima_kps || '';
+                document.getElementById('nomorKPS').value = siswa.nomor_kps || '';
+                document.getElementById('penerimaKIP').value = siswa.penerima_kip || '';
+                document.getElementById('nomorKIP').value = siswa.nomor_kip || '';
+                document.getElementById('namaPadaKIP').value = siswa.nama_dikip || '';
+                document.getElementById('nomorKKS').value = siswa.nomor_kks || '';
+                document.getElementById('alasanLayakPIP').value = siswa.alasan_layah || '';
+                document.getElementById('namaBank').value = siswa.bank || '';
+                document.getElementById('nomorRekening').value = siswa.nomor_rekening || '';
+                document.getElementById('namaPadaRekening').value = siswa.rekening_atasnama || '';
+                document.getElementById('alamatJalan').value = '';
+                document.getElementById('rt').value = siswa.rt || '';
+                document.getElementById('rw').value = siswa.rw || '';
+                document.getElementById('dusun').value = siswa.dusun || '';
+                document.getElementById('kelurahan').value = siswa.kelurahan || '';
+                document.getElementById('kecamatan').value = siswa.kecamatan || '';
+                document.getElementById('kodePos').value = siswa.kode_pos || '';
+                document.getElementById('lintang').value = siswa.lintang || '';
+                document.getElementById('bujur').value = siswa.bujur || '';
+
+                // -- Data Kontak --
+                document.getElementById('tlp').value = siswa.tlp || '';
+                document.getElementById('hp').value = siswa.hp || '';
+                document.getElementById('email').value = siswa.email || '';
+
+                // -- Data Bantuan (tambahan) --
+                document.getElementById('layakPIP').value = siswa.layak_pip || '';
+
+                // -- Data Keluarga --
                 document.getElementById('namaAyah').value = siswa.nama_ayah || '';
+                document.getElementById('tahunLahirAyah').value = siswa.tahun_lahir_ayah ?? '';
+                document.getElementById('pendidikanAyah').value = siswa.jenjang_pendidikan_ayah || '';
+                document.getElementById('pekerjaanAyah').value = siswa.pekerjaan_ayah || '';
+                document.getElementById('penghasilanAyah').value = siswa.penghasilan_ayah || '';
+                document.getElementById('nikAyah').value = siswa.nik_ayah || '';
+
                 document.getElementById('namaIbu').value = siswa.nama_ibu || '';
-                document.getElementById('alamat').value = siswa.alamat;
+                document.getElementById('tahunLahirIbu').value = siswa.tahun_lahir_ibu ?? '';
+                document.getElementById('pendidikanIbu').value = siswa.jenjang_pendidikan_ibu || '';
+                document.getElementById('pekerjaanIbu').value = siswa.pekerjaan_ibu || '';
+                document.getElementById('penghasilanIbu').value = siswa.penghasil_ibu || '';
+                document.getElementById('nikIbu').value = siswa.nik_ibu || '';
+
+                document.getElementById('namaWali').value = siswa.nama_wali || '';
+                document.getElementById('tahunLahirWali').value = siswa.tahun_lahir_wali ?? '';
+                document.getElementById('pendidikanWali').value = siswa.jenjang_pendidikan_wali || '';
+                document.getElementById('pekerjaanWali').value = siswa.pekerjaan_wali || '';
+                document.getElementById('penghasilanWali').value = siswa.penghasilan_wali || '';
+                document.getElementById('nikWali').value = siswa.nik_wali || '';
 
                 // Set Mode Edit
                 isEditModeInput.value = "true";
                 document.querySelector('.modal-header h3').textContent = "Edit Data Siswa";
-                
+                resetToFirstTab();
+
                 // Buka Modal
                 modal.classList.add('active');
             }
@@ -507,11 +1331,14 @@
 
                     alert('Data berhasil dihapus.');
                     loadSiswaData(); // Refresh tabel
+                    return true;
                 } catch (err) {
                     console.error('Gagal menghapus:', err);
                     alert('Gagal menghapus data: ' + err.message);
+                    return false;
                 }
             }
+            return false;
         }
 
         // Simpan Data Siswa
@@ -526,21 +1353,123 @@
             try {
                 const isEdit = isEditModeInput.value === "true";
                 const nisnVal = document.getElementById('nisn').value;
-                const namaVal = document.getElementById('namaSiswa').value;
-                const tempatLahirVal = document.getElementById('tempatLahir').value;
-                const tanggalLahirVal = document.getElementById('tanggalLahir').value || null;
-                const namaAyahVal = document.getElementById('namaAyah').value;
-                const namaIbuVal = document.getElementById('namaIbu').value;
-                const alamatVal = document.getElementById('alamat').value;
+
+                // Helper kecil buat ambil value input/select, kembalikan null kalo kosong
+                const val = (id) => {
+                    const v = document.getElementById(id).value;
+                    return v === '' ? null : v;
+                };
+                const numVal = (id) => {
+                    const v = document.getElementById(id).value;
+                    return v === '' ? null : Number(v);
+                };
+
+                // Upload foto ke Supabase Storage kalau ada file baru dipilih
+                let fotoPublicUrl = fotoUrlInput.value || null;
+                if (selectedFotoFile) {
+                    const fileExt = selectedFotoFile.name.split('.').pop();
+                    const filePath = `siswa/${nisnVal}-${Date.now()}.${fileExt}`;
+                    const { error: uploadError } = await supabaseClient.storage
+                        .from('aset')
+                        .upload(filePath, selectedFotoFile, { upsert: true });
+
+                    if (uploadError) throw uploadError;
+
+                    const { data: urlData } = supabaseClient.storage.from('aset').getPublicUrl(filePath);
+                    fotoPublicUrl = urlData.publicUrl;
+                }
+
+                // Susun kembali alamat lengkap (untuk kolom "alamat" & tampilan tabel/PDF yang sudah ada)
+                const alamatParts = [
+                    val('alamatJalan'),
+                    val('rt') ? `RT ${val('rt')}` : null,
+                    val('rw') ? `RW ${val('rw')}` : null,
+                    val('dusun'), val('kelurahan'), val('kecamatan'),
+                    val('kodePos')
+                ].filter(Boolean);
+                const alamatVal = alamatParts.join(', ');
 
                 const siswaData = {
                     nisn: nisnVal,
-                    nama_siswa: namaVal,
-                    tempat_lahir: tempatLahirVal,
-                    tanggal_lahir: tanggalLahirVal,
-                    nama_ayah: namaAyahVal,
-                    nama_ibu: namaIbuVal,
-                    alamat: alamatVal
+                    nama_siswa: val('namaSiswa'),
+                    tempat_lahir: val('tempatLahir'),
+                    tanggal_lahir: document.getElementById('tanggalLahir').value || null,
+                    alamat: alamatVal,
+                    photo: fotoPublicUrl,
+
+                    // --- Data Pribadi (tambahan) ---
+                    nipd: val('nipd'),
+                    jk: val('jenisKelamin'),
+                    nik: val('nik'),
+                    agama: val('agama'),
+                    nomor_akta: val('nomorAktaKelahiran'),
+                    kebutuhan_khusus: val('kebutuhanKhusus'),
+                    sekolah_asal: val('sekolahAsal'),
+                    skhun: val('skhun'),
+                    rombel_saat_ini: val('rombelSaatIni'),
+                    jenis_tinggal: val('jenisTinggal'),
+                    nomor_peserta_ujian: val('nomorPesertaUjian'),
+                    nomor_seri_ijazah: val('nomorSeriIjazah'),
+                    jumlah_saudara: numVal('jumlahSaudara'),
+                    anak_ke: numVal('anakKe'),
+                    nomor_kk: val('nomorKK'),
+                    berat_badan: numVal('beratBadan'),
+                    tinggi_badan: numVal('tinggiBadan'),
+                    lingkar_kepala: numVal('lingkarKepala'),
+                    alat_transportasi: val('modaTransportasi'),
+                    jarak_kesekolah: numVal('jarakKeSekolah'),
+
+                    // --- Data Kontak ---
+                    tlp: val('tlp'),
+                    hp: val('hp'),
+                    email: val('email'),
+
+                    // --- Data Bantuan / Kesejahteraan Sosial ---
+                    penerima_kps: val('penerimaKPS'),
+                    nomor_kps: val('nomorKPS'),
+                    penerima_kip: val('penerimaKIP'),
+                    nomor_kip: val('nomorKIP'),
+                    nama_dikip: val('namaPadaKIP'),
+                    nomor_kks: val('nomorKKS'),
+                    layak_pip: val('layakPIP'),
+                    alasan_layah: val('alasanLayakPIP'),
+
+                    // --- Data Rekening Bank ---
+                    bank: val('namaBank'),
+                    nomor_rekening: val('nomorRekening'),
+                    rekening_atasnama: val('namaPadaRekening'),
+
+                    // --- Alamat (tambahan) ---
+                    rt: val('rt'),
+                    rw: val('rw'),
+                    dusun: val('dusun'),
+                    kelurahan: val('kelurahan'),
+                    kecamatan: val('kecamatan'),
+                    kode_pos: val('kodePos'),
+                    lintang: val('lintang'),
+                    bujur: val('bujur'),
+
+                    // --- Data Keluarga ---
+                    nama_ayah: val('namaAyah'),
+                    tahun_lahir_ayah: numVal('tahunLahirAyah'),
+                    jenjang_pendidikan_ayah: val('pendidikanAyah'),
+                    pekerjaan_ayah: val('pekerjaanAyah'),
+                    penghasilan_ayah: val('penghasilanAyah'),
+                    nik_ayah: val('nikAyah'),
+
+                    nama_ibu: val('namaIbu'),
+                    tahun_lahir_ibu: numVal('tahunLahirIbu'),
+                    jenjang_pendidikan_ibu: val('pendidikanIbu'),
+                    pekerjaan_ibu: val('pekerjaanIbu'),
+                    penghasil_ibu: val('penghasilanIbu'),
+                    nik_ibu: val('nikIbu'),
+
+                    nama_wali: val('namaWali'),
+                    tahun_lahir_wali: numVal('tahunLahirWali'),
+                    jenjang_pendidikan_wali: val('pendidikanWali'),
+                    pekerjaan_wali: val('pekerjaanWali'),
+                    penghasilan_wali: val('penghasilanWali'),
+                    nik_wali: val('nikWali')
                 };
 
                 let result;
@@ -675,9 +1604,182 @@
             }
         });
 
-        // --- Import CSV ---
+        // --- Import CSV / Excel (termasuk deteksi otomatis format Dapodik) ---
         const importBtn = document.getElementById('importBtn');
         const importFile = document.getElementById('importFile');
+
+        // Peta kolom (indeks 0-based) hasil unduhan Dapodik -> nama kolom tabel datasiswa
+        // Struktur: [indeksKolomExcel, namaKolomDatabase, tipeData]
+        const DAPODIK_COLUMNS = [
+            [1, 'nama_siswa', 'string'],
+            [2, 'nipd', 'string'],
+            [3, 'jk', 'string'],
+            [4, 'nisn', 'string'],
+            [5, 'tempat_lahir', 'string'],
+            [6, 'tanggal_lahir', 'date'],
+            [7, 'nik', 'string'],
+            [8, 'agama', 'string'],
+            [9, 'alamat', 'string'],
+            [10, 'rt', 'string'],
+            [11, 'rw', 'string'],
+            [12, 'dusun', 'string'],
+            [13, 'kelurahan', 'string'],
+            [14, 'kecamatan', 'string'],
+            [15, 'kode_pos', 'string'],
+            [16, 'jenis_tinggal', 'string'],
+            [17, 'alat_transportasi', 'string'],
+            [18, 'tlp', 'string'],
+            [19, 'hp', 'string'],
+            [20, 'email', 'string'],
+            [21, 'skhun', 'string'],
+            [22, 'penerima_kps', 'string'],
+            [23, 'nomor_kps', 'string'],
+            [24, 'nama_ayah', 'string'],
+            [25, 'tahun_lahir_ayah', 'number'],
+            [26, 'jenjang_pendidikan_ayah', 'string'],
+            [27, 'pekerjaan_ayah', 'string'],
+            [28, 'penghasilan_ayah', 'string'],
+            [29, 'nik_ayah', 'string'],
+            [30, 'nama_ibu', 'string'],
+            [31, 'tahun_lahir_ibu', 'number'],
+            [32, 'jenjang_pendidikan_ibu', 'string'],
+            [33, 'pekerjaan_ibu', 'string'],
+            [34, 'penghasil_ibu', 'string'],
+            [35, 'nik_ibu', 'string'],
+            [36, 'nama_wali', 'string'],
+            [37, 'tahun_lahir_wali', 'number'],
+            [38, 'jenjang_pendidikan_wali', 'string'],
+            [39, 'pekerjaan_wali', 'string'],
+            [40, 'penghasilan_wali', 'string'],
+            [41, 'nik_wali', 'string'],
+            [42, 'rombel_saat_ini', 'string'],
+            [43, 'nomor_peserta_ujian', 'string'],
+            [44, 'nomor_seri_ijazah', 'string'],
+            [45, 'penerima_kip', 'string'],
+            [46, 'nomor_kip', 'string'],
+            [47, 'nama_dikip', 'string'],
+            [48, 'nomor_kks', 'string'],
+            [49, 'nomor_akta', 'string'],
+            [50, 'bank', 'string'],
+            [51, 'nomor_rekening', 'string'],
+            [52, 'rekening_atasnama', 'string'],
+            [53, 'layak_pip', 'string'],
+            [54, 'alasan_layah', 'string'],
+            [55, 'kebutuhan_khusus', 'string'],
+            [56, 'sekolah_asal', 'string'],
+            [57, 'anak_ke', 'number'],
+            [58, 'lintang', 'string'],
+            [59, 'bujur', 'string'],
+            [60, 'nomor_kk', 'string'],
+            [61, 'berat_badan', 'number'],
+            [62, 'tinggi_badan', 'number'],
+            [63, 'lingkar_kepala', 'number'],
+            [64, 'jumlah_saudara', 'number'],
+            [65, 'jarak_kesekolah', 'number'],
+        ];
+
+        // Konversi 1 nilai sel Excel sesuai tipe kolom tujuan
+        function convertDapodikCell(value, type) {
+            if (value === undefined || value === null) return null;
+            if (typeof value === 'string' && value.trim() === '') return null;
+
+            if (type === 'number') {
+                const n = Number(value);
+                return isNaN(n) ? null : n;
+            }
+            if (type === 'date') {
+                if (value instanceof Date) {
+                    const y = value.getFullYear();
+                    const m = String(value.getMonth() + 1).padStart(2, '0');
+                    const d = String(value.getDate()).padStart(2, '0');
+                    return `${y}-${m}-${d}`;
+                }
+                const dateObj = new Date(String(value).trim());
+                if (!isNaN(dateObj.getTime())) {
+                    const y = dateObj.getFullYear();
+                    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    const d = String(dateObj.getDate()).padStart(2, '0');
+                    return `${y}-${m}-${d}`;
+                }
+                return null;
+            }
+            // string (default) -- dijaga tetap teks agar NISN/NIK/RT dsb tidak kehilangan angka 0 di depan
+            return String(value).trim();
+        }
+
+        // Cari baris header baku Dapodik: "No | Nama | NIPD | JK | NISN ..."
+        function findDapodikHeaderRow(aoa) {
+            for (let i = 0; i < Math.min(aoa.length, 15); i++) {
+                const row = aoa[i] || [];
+                if (
+                    String(row[0] ?? '').trim() === 'No' &&
+                    String(row[1] ?? '').trim() === 'Nama' &&
+                    String(row[3] ?? '').trim() === 'JK' &&
+                    String(row[4] ?? '').trim() === 'NISN'
+                ) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        // Parse worksheet Excel unduhan Dapodik menjadi array object siap upsert.
+        // Return null jika file BUKAN format Dapodik (biar fallback ke import biasa).
+        function parseDapodikExcel(worksheet) {
+            const aoa = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: true, defval: null });
+            const headerRowIdx = findDapodikHeaderRow(aoa);
+            if (headerRowIdx === -1) return null;
+
+            const dataStart = headerRowIdx + 2; // Lewati baris sub-header (Nama/Tahun Lahir/Pekerjaan dst.)
+            const rows = [];
+
+            for (let r = dataStart; r < aoa.length; r++) {
+                const rawRow = aoa[r];
+                if (!rawRow || rawRow.every(c => c === null || c === undefined || c === '')) continue;
+
+                const obj = {};
+                DAPODIK_COLUMNS.forEach(([colIdx, field, type]) => {
+                    obj[field] = convertDapodikCell(rawRow[colIdx], type);
+                });
+
+                if (obj.nisn && obj.nama_siswa) rows.push(obj);
+            }
+            return rows;
+        }
+
+        // Import khusus data hasil deteksi format Dapodik
+        async function processDapodikImport(rows) {
+            if (!rows || rows.length === 0) {
+                alert('Tidak ditemukan data siswa yang valid pada file Dapodik ini.');
+                importFile.value = '';
+                return;
+            }
+
+            const konfirmasi = confirm(
+                `Terdeteksi file unduhan Dapodik dengan ${rows.length} data siswa.\n\n` +
+                `Data dengan NISN yang sudah ada di database akan diperbarui, dan NISN baru akan ditambahkan.\n\n` +
+                `Lanjutkan import?`
+            );
+            if (!konfirmasi) {
+                importFile.value = '';
+                return;
+            }
+
+            try {
+                const { error } = await supabaseClient
+                    .from('datasiswa')
+                    .upsert(rows, { onConflict: 'nisn' });
+
+                if (error) throw error;
+
+                alert(`Berhasil mengimport ${rows.length} data siswa dari file Dapodik!`);
+                loadSiswaData();
+            } catch (err) {
+                console.error('Dapodik import error:', err);
+                alert('Gagal import data Dapodik: ' + err.message);
+            }
+            importFile.value = '';
+        }
 
         importBtn.addEventListener('click', () => {
             importFile.click();
@@ -714,8 +1816,16 @@
                         const workbook = XLSX.read(data, { type: 'array', cellDates: true });
                         const firstSheetName = workbook.SheetNames[0];
                         const worksheet = workbook.Sheets[firstSheetName];
-                        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-                        processImportData(jsonData);
+
+                        // Coba deteksi dulu apakah ini file unduhan Dapodik (header 2 baris + data lengkap)
+                        const dapodikRows = parseDapodikExcel(worksheet);
+                        if (dapodikRows !== null) {
+                            processDapodikImport(dapodikRows);
+                        } else {
+                            // Bukan format Dapodik -> pakai alur import template biasa
+                            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+                            processImportData(jsonData);
+                        }
                     } catch (err) {
                         console.error('Excel parse error:', err);
                         alert('Gagal membaca file Excel.');
