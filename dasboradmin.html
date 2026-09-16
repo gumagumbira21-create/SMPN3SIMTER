@@ -819,7 +819,7 @@
                         <a href="pembinaanwaliadmin.html" class="accordion-btn"><i class="fas fa-user-friends"></i> Pembinaan Guru Wali</a>
                         <a href="nilaiakademisadmin.html" class="accordion-btn"><i class="fas fa-sort-numeric-down"></i> Nilai Akademis</a>
                         <a href="kasusadmin.html" class="accordion-btn"><i class="fas fa-user-injured"></i> Kasus</a>
-                        <a href="bkadmin.html" class="accordion-btn"><i class="fas fa-hands-helping"></i> Laporan Bimbingan Konseling (BK/BP)</a>
+                        <a href="#" class="accordion-btn" onclick="event.preventDefault(); openDevModal();"><i class="fas fa-hands-helping"></i> Laporan Bimbingan Konseling (BK/BP)</a>
                         <a href="daftarmbg.html" class="accordion-btn"><i class="fas fa-receipt"></i> Cetak Quota MBG</a>
                     </div>
                 </div>
@@ -1008,6 +1008,22 @@
                 </button>
                 <button class="btn btn-primary" id="savePengumumanBtn">
                     <i class="fas fa-save"></i> Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Notifikasi Fitur Dalam Pengembangan -->
+    <div id="devModal" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-body" style="padding-top: 10px;">
+                <i class="fas fa-tools" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+                <p style="font-size: 1rem; color: #333; margin: 0;">Maaf, fitur ini masih dalam tahap pengembangan.</p>
+                <p style="font-size: 1rem; color: #333; margin: 5px 0 0;">Terimakasih</p>
+            </div>
+            <div class="modal-footer" style="justify-content: center; border-top: none; margin-top: 15px;">
+                <button class="btn btn-primary" id="closeDevModalBtn">
+                    <i class="fas fa-check"></i> Oke
                 </button>
             </div>
         </div>
@@ -1558,7 +1574,24 @@
                     closePengumumanModal();
                 }
             });
+
+            // Modal Notifikasi Fitur Dalam Pengembangan
+            document.getElementById('closeDevModalBtn').addEventListener('click', closeDevModal);
+            window.addEventListener('click', (e) => {
+                const devModal = document.getElementById('devModal');
+                if (e.target === devModal) {
+                    closeDevModal();
+                }
+            });
         });
+
+        function openDevModal() {
+            document.getElementById('devModal').classList.add('active');
+        }
+
+        function closeDevModal() {
+            document.getElementById('devModal').classList.remove('active');
+        }
 
         // --- Tampil Tanggal ---
         function updateNavbarDate() {
