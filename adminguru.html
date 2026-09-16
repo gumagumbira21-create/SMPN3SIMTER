@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>SIMPEDIK</title>
     <!-- Icon Kece -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -230,6 +230,12 @@
             .menu-card span {
                 font-size: 0.85rem; /* Teks kecilin */
             }
+
+            /* Kontainer Identitas: jarak kiri-kanan ke tepi layar 5px di HP */
+            #biodataContainer {
+                margin-left: calc(-2rem + 5px);
+                margin-right: calc(-2rem + 5px);
+            }
         }
 
         /* --- Gaya Modal --- */
@@ -386,8 +392,12 @@
         }
 
         /* Kasih ruang bawah biar konten ga ketutup footer sticky */
+        /* Buffer diperbesar + safe-area-inset supaya bagian bawah kontainer
+           (mis. No. Telepon di kontainer identitas) tidak ketutup footer,
+           termasuk di HP dengan teks footer yang bisa turun jadi 3 baris
+           atau yang punya home-indicator (notch bawah) */
         .main-content {
-            padding-bottom: calc(var(--footer-height) + 40px + 20px) !important;
+            padding-bottom: calc(var(--footer-height) + 96px + env(safe-area-inset-bottom, 0px)) !important;
         }
 
         /* --- Overlay khusus Menu Sheet --- */
